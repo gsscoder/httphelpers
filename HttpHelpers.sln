@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpHelpers", "src\HttpHelpers\HttpHelpers.csproj", "{80CEBBB3-116B-4620-8BD1-5F315069CAAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpHelpers.Tests", "src\HttpHelpers.Tests\HttpHelpers.Tests.csproj", "{CDA56BD7-531E-4551-9905-D54A005E9EFA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Welcome", ".Welcome", "{8B572587-2D67-4B0E-B83B-E8B8D2B289E1}"
+	ProjectSection(SolutionItems) = preProject
+		doc\ChangeLog = doc\ChangeLog
+		doc\LICENSE = doc\LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{80CEBBB3-116B-4620-8BD1-5F315069CAAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80CEBBB3-116B-4620-8BD1-5F315069CAAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80CEBBB3-116B-4620-8BD1-5F315069CAAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80CEBBB3-116B-4620-8BD1-5F315069CAAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDA56BD7-531E-4551-9905-D54A005E9EFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDA56BD7-531E-4551-9905-D54A005E9EFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDA56BD7-531E-4551-9905-D54A005E9EFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDA56BD7-531E-4551-9905-D54A005E9EFA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

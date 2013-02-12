@@ -1,0 +1,17 @@
+src/HttpHelpers/bin/*
+src/HttpHelpers/obj
+src/HttpHelpers.Tests/bin/*
+src/HttpHelpers.Tests/obj
+*.suo
+*.userprefs
+*~
+*.pidb
+*.test-cache
+*.DS_Store
+*.csproj.user
+*_*.cs
+*.DotSettings.user
+*.v11.suo
+_old
+*.mdb
+*.pdb
