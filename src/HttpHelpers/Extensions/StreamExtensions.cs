@@ -27,58 +27,13 @@
 //
 #endregion
 #region Using Directives
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 #endregion
 
 namespace HttpHelpers.Extensions
 {
     static class StreamExtensions
     {
-        /*
-        static bool ParseHttpResponseLine(this Stream stream, out string version, out int? statusCode, out string reason)
-        {
-            version = string.Empty;
-            statusCode = null;
-            reason = string.Empty;
-
-            bool matched;
-            var part1 = stream.ReadUntil(ch => ch == '\x20', out matched);
-            if (!matched)
-            {
-                return false;
-            }
-            version = part1;
-
-            var part2 = stream.ReadUntil(ch => ch == '\x20', out matched);
-            if (!matched)
-            {
-                return false;
-            }
-            int parsed;
-            if (int.TryParse(part2, out parsed))
-            {
-                statusCode = parsed;
-            }
-            else
-            {
-                return false;
-            }
-
-            var part3 = stream.ReadUntil(ch => (ch == '\xA' || ch == '\xD'), out matched);
-            if (!matched)
-            {
-                return false;
-            }
-            reason = part3;
-
-            return part1.Length > 0 && part2.Length > 0 && part3.Length > 0;
-        }
-        */
-
         public static PeekableStream AsPeekableStream(this Stream stream)
         {
             return new PeekableStream(stream);

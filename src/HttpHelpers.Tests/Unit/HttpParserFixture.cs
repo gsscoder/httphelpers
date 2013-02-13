@@ -31,5 +31,27 @@ namespace HttpHelpers.Tests.Unit
             callbacks.Headers["Content-Type"].Should().Be("text/html; q=0.9, text/plain");
             callbacks.Body.Should().HaveCount(c => c == 0);
         }
+
+        [Fact]
+        public void Should_parse_response_with_one_header_and_body()
+        {
+            // Given
+            var stream = ("HTTP/1.1 200 OK\r\n" +
+                          "Date: Sun, 08 Oct 2000 18:46:12 GMT\r\n\r\n" +
+                          "<html><body><p>Heartbeat!</p></body></html>\r\n").AsStream();
+            var parser = new HttpParser();
+            var callbacks = new FakeHttpParserCallbacks();
+
+            // When
+            parser.ParseResponse(callbacks, stream);
+
+            // Than
+            callbacks.ResponseLine.Version.Should().Be("HTTP/1.1");
+            callbacks.ResponseLine.Code.Should().Be(200);
+            callbacks.ResponseLine.Reason.Should().Be("OK");
+            callbacks.Headers.Should().HaveCount(c => c == 1);
+            callbacks.Headers["Date"].Should().Be("Sun, 08 Oct 2000 18:46:12 GMT");
+            callbacks.Body.ToDecodedString().Should().Be("<html><body><p>Heartbeat!</p></body></html>\r\n");
+        }
     }
 }

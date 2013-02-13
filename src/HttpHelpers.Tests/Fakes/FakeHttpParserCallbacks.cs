@@ -14,7 +14,16 @@ namespace HttpHelpers.Tests.Fakes
             public string Version;
         }
 
+        internal struct FakeResponseLine
+        {
+            public string Version;
+            public int? Code;
+            public string Reason;
+        }
+
         public FakeRequestLine RequestLine = new FakeRequestLine();
+
+        public FakeResponseLine ResponseLine = new FakeResponseLine();
 
         public Dictionary<string, string> Headers = new Dictionary<string, string>();
 
@@ -33,6 +42,9 @@ namespace HttpHelpers.Tests.Fakes
 
         public void OnResponseLine(string version, int? code, string reason)
         {
+            ResponseLine.Version = version;
+            ResponseLine.Code = code;
+            ResponseLine.Reason = reason;
         }
 
         public void OnHeaderLine(string name, string value)

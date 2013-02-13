@@ -2,6 +2,7 @@
 
   * Parser re-implemented on the model the one found on Surf Http Library.
   * Enhanced code readability and performance using PeekableStream.
+  * Added response parser.
 
 2012-02-12	Giacomo Stelluti Scala	<gsscoder@gmail.com>
 
