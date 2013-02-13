@@ -1,6 +1,6 @@
 ﻿#region License
 //
-// Http Helpers Library: StringExtensions.cs
+// Http Helpers Library: CharExtensions.cs
 //
 // Author:
 //   Giacomo Stelluti Scala (gsscoder@gmail.com)
@@ -26,38 +26,51 @@
 // THE SOFTWARE.
 //
 #endregion
-#region Using Directives
-using System;
-using System.Globalization;
-using System.Linq;
-#endregion
 
 namespace HttpHelpers.Extensions
 {
-    static class StringExtensions
+    static class CharExtensions
     {
-        public static string TrimStartIf(this string value, char c)
+        public static bool IsWhiteSpace(this char c)
         {
-            return !string.IsNullOrEmpty(value) && c == value[0] ? value.TrimStart(c) : value;
+            switch (c)
+            {
+                // Regular
+                case '\f':
+                case '\v':
+                case ' ':
+                case '\t':
+                    return true;
+
+                // Unicode
+                default:
+                    return (c > 127 && char.IsWhiteSpace(c));
+            }
         }
 
-        public static string TrimStartIf(this string value, params char[] chars)
+        public static bool IsLineTerminator(this char c)
         {
-            return !string.IsNullOrEmpty(value) && chars.Any(c => c == value[0]) ? value.TrimStart(chars) : value;
+            switch (c)
+            {
+                case '\xD':
+                case '\xA':
+                case '\x2028':
+                case '\x2029':
+                    return true;
+
+                default:
+                    return false;
+            }
         }
 
-        public static string TrimEndIf(this string value, char c)
-        {
-            return !string.IsNullOrEmpty(value) && c == value[0] ? value.TrimEnd(c) : value;
-        }
-
-        //public static string TrimStartWhen(this string value, Func<char, bool> match)
+        //public static bool IsLineTerminator(this char c)
         //{
-        //    if (string.IsNullOrEmpty(value))
-        //    {
-        //        return value;
-        //    }
-        //    value.t
+        //    return c == '\xD' || c == '\xA';
         //}
+
+        public static bool IsDigit(this char c)
+        {
+            return (c >= '0') && (c <= '9');
+        }
     }
 }

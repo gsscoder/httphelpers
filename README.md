@@ -1,4 +1,4 @@
-﻿Http Helpers 0.1.0.1 alfa.
+﻿Http Helpers 0.1.0.3 alfa.
 ===
 This project was born because [@davidfawl](https://twitter.com/davidfowl) wrote on Twitter about the creation of an [OWIN HTTP client](https://github.com/davidfowl/OwinHttpClient).
 I was very interested due my [Surf Http Library](https://github.com/gsscoder/surfhttp), created mainly for testing purposes.
@@ -12,25 +12,24 @@ MonoDevelop or Visual Studio.
 
 At glance:
 ---
-For the moment there's nothing more than three extension method to {{System.IO.Stream}}.
 
 ```csharp
-var stream = "GET /your/web/resource HTTP/1.1\r\n" +
-    "Accept-Language: en-us\r\n" +
-    "Host: somewhere.com\r\n\r\n".AsStream();
+// Given
+var stream = ("GET /gsscoder/httphelpers HTTP/1.1\r\n" +
+                "Content-Type: text/html; q=0.9, text/plain\r\n\r\n").AsStream();
+var parser = new HttpParser();
+var callbacks = new FakeHttpParserCallbacks();
 
-string method, uri, version;
-bool result = stream.ParseHttpRequestLine(out method, out uri, out version);
+// When
+parser.ParseRequest(callbacks, stream);
 
-string headerName;
-string headerValue;
-result = stream.ParseNextHttpHeader(out headerName, out headerValue);
-
-// when parsing a response:
-string version;
-int? code;
-string reason;
-result = stream.ParseHttpResponseLine(out version, out code, out reason);
+// Than
+callbacks.RequestLine.Method.Should().Be("GET");
+callbacks.RequestLine.Uri.Should().Be("/gsscoder/httphelpers");
+callbacks.RequestLine.Version.Should().Be("HTTP/1.1");
+callbacks.Headers.Should().HaveCount(c => c == 1);
+callbacks.Headers["Content-Type"].Should().Be("text/html; q=0.9, text/plain");
+callbacks.Body.Should().HaveCount(c => c == 0);
 ```
 
 Contacts:

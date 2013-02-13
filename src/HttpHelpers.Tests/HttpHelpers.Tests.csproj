@@ -48,8 +48,9 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Fakes\FakeHttpParserCallbacks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Unit\Extensions\StreamExtensionsFixture.cs" />
+    <Compile Include="Unit\HttpParserFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HttpHelpers\HttpHelpers.csproj">
@@ -68,7 +69,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <Folder Include="Unit\Extensions\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

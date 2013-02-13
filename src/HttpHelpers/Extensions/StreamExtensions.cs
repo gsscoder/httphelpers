@@ -36,9 +36,10 @@ using System.Text;
 
 namespace HttpHelpers.Extensions
 {
-    public static class StreamExtensions
+    static class StreamExtensions
     {
-        public static bool ParseNextHttpHeader(this Stream stream, out string name, out string value)
+        /*
+        static bool ParseNextHttpHeader(this Stream stream, out string name, out string value)
         {
             name = string.Empty;
             value = string.Empty;
@@ -64,7 +65,7 @@ namespace HttpHelpers.Extensions
             return headerName.Length > 0 && headerValue.Length > 0;
         }
 
-        public static bool ParseHttpRequestLine(this Stream stream, out string method, out string uri, out string version)
+        static bool ParseHttpRequestLine(this Stream stream, out string method, out string uri, out string version)
         {
             method = string.Empty;
             uri = string.Empty;
@@ -95,7 +96,7 @@ namespace HttpHelpers.Extensions
             return part1.Length > 0 && part2.Length > 0 && part3.Length > 0;
         }
 
-        public static bool ParseHttpResponseLine(this Stream stream, out string version, out int? statusCode, out string reason)
+        static bool ParseHttpResponseLine(this Stream stream, out string version, out int? statusCode, out string reason)
         {
             version = string.Empty;
             statusCode = null;
@@ -133,9 +134,9 @@ namespace HttpHelpers.Extensions
 
             return part1.Length > 0 && part2.Length > 0 && part3.Length > 0;
         }
+        */
 
-
-        private static string ReadUntil(this Stream stream, Func<char, bool> match, out bool matched)
+        public static string ReadUntil(this Stream stream, Func<char, bool> match, out bool matched)
         {
             matched = false;
             var builder = new StringBuilder();
@@ -155,6 +156,45 @@ namespace HttpHelpers.Extensions
                 builder.Append(ch);
             }
             return builder.ToString();
+        }
+
+        public static string ReadUntil(this Stream stream, Func<char, bool> match)
+        {
+            var builder = new StringBuilder();
+            while (true)
+            {
+                var c = stream.ReadByte();
+                var ch = (char) c;
+                if (match(ch) || c == -1)
+                {
+                    break;
+                }
+                builder.Append(ch);
+            }
+            return builder.ToString();
+        }
+
+        public static int SkipWhile(this Stream stream, Func<char, bool> match, out char last)
+        {
+            last = '\0';
+            var skipped = 0;
+            while (true)
+            {
+                var c = stream.ReadByte();
+                var ch = (char)c;
+                if (c == -1)
+                {
+                    last = '\0';
+                    break;
+                }
+                if (!match(ch))
+                {
+                    last = ch;
+                    break;
+                }
+                skipped++;
+            }
+            return skipped;
         }
     }
 }

@@ -1,3 +1,7 @@
+2012-02-13  Giacomo Stelluti Scala  <gsscoder@gmail.com>
+
+  * Parser re-implemented on the model the one found on Surf Http Library.
+
 2012-02-12	Giacomo Stelluti Scala	<gsscoder@gmail.com>
 
   * Initial release.
