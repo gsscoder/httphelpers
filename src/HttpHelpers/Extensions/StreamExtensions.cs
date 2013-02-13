@@ -34,9 +34,9 @@ namespace HttpHelpers.Extensions
 {
     static class StreamExtensions
     {
-        public static PeekableStream AsPeekableStream(this Stream stream)
-        {
-            return new PeekableStream(stream);
-        }
+        //public static PeekableStream AsPeekableStream(this Stream stream)
+        //{
+        //    return new PeekableStream(stream);
+        //}
     }
 }

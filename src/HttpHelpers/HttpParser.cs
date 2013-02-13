@@ -107,9 +107,9 @@ namespace HttpHelpers
         }
 
         private void ParseMessage(IHttpParserCallbacks callbacks, Stream stream,
-            Func<PeekableStream, bool> parseHeading)
+            Func<PeekableReader, bool> parseHeading)
         {
-            var peekable = stream.AsPeekableStream();
+            var peekable = new PeekableReader(stream); //stream.AsPeekableStream();
 
             callbacks.OnMessageBegin();
 
@@ -149,7 +149,7 @@ namespace HttpHelpers
             }
 
             var body = new List<byte>(1024);
-            if (peekable.Peek(0) != -1)
+            if (peekable.PeekByte() != -1)
             {
                 while (true)
                 {
