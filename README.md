@@ -13,7 +13,7 @@ MonoDevelop or Visual Studio.
 At glance:
 ---
 The library exposes an HTTP request/response parser.
-See the example below and [unit tests](https://github.com/gsscoder/httphelpers/blob/master/src/HttpHelpers.Tests/Unit/HttpParserFixture.cs).
+See the example below, [unit tests](https://github.com/gsscoder/httphelpers/blob/master/src/HttpHelpers.Tests/Unit/HttpParserFixture.cs) or this [sample web server](https://gist.github.com/gsscoder/4945688) built with library HTTP parser.
 
 ```csharp
 // Given
