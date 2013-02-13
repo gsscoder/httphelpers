@@ -45,6 +45,7 @@
     </Compile>
     <Compile Include="HttpParser.cs" />
     <Compile Include="IHttpParserCallbacks.cs" />
+    <Compile Include="PeekableStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

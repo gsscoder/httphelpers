@@ -49,6 +49,7 @@
     </Compile>
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Fakes\FakeHttpParserCallbacks.cs" />
+    <Compile Include="Unit\PeekableStreamFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unit\HttpParserFixture.cs" />
   </ItemGroup>

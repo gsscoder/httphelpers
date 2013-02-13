@@ -63,11 +63,6 @@ namespace HttpHelpers.Extensions
             }
         }
 
-        //public static bool IsLineTerminator(this char c)
-        //{
-        //    return c == '\xD' || c == '\xA';
-        //}
-
         public static bool IsDigit(this char c)
         {
             return (c >= '0') && (c <= '9');

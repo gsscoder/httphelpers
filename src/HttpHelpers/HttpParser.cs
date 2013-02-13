@@ -12,21 +12,24 @@ namespace HttpHelpers
     {
         public void ParseRequest(IHttpParserCallbacks callbacks, Stream stream)
         {
-            ParseMessage(callbacks, stream, () =>
+            ParseMessage(callbacks, stream, peekable =>
                 {
-                    bool matched;
-                    var method = stream.ReadUntil(c => c.IsWhiteSpace(), out matched);
-                    if (!matched)
+                    var method = peekable.TakeWhile(c => !c.IsWhiteSpace());
+                    if (!peekable.PeekChar().IsWhiteSpace())
                     {
                         return false;
                     }
-                    var uri = stream.ReadUntil(c => c.IsWhiteSpace(), out matched);
-                    if (!matched)
+                    peekable.SkipWhile(c => c.IsWhiteSpace());
+
+                    var uri = peekable.TakeWhile(c => !c.IsWhiteSpace());
+                    if (!peekable.PeekChar().IsWhiteSpace())
                     {
                         return false;
                     }
-                    var version = stream.ReadUntil(c => c.IsLineTerminator(), out matched);
-                    if (!matched)
+                    peekable.SkipWhile(c => c.IsWhiteSpace());
+
+                    var version = peekable.TakeWhile(c => !c.IsLineTerminator());
+                    if (!peekable.PeekChar().IsLineTerminator())
                     {
                         return false;
                     }
@@ -37,47 +40,41 @@ namespace HttpHelpers
         }
 
         private void ParseMessage(IHttpParserCallbacks callbacks, Stream stream,
-            Func<bool> parseHeading)
+            Func<PeekableStream, bool> parseHeading)
         {
+            var peekable = stream.AsPeekableStream();
+
             callbacks.OnMessageBegin();
 
-            var parserState = parseHeading();
-            if (!parserState)
+            if (!parseHeading(peekable))
             {
                 callbacks.OnMessageEnd();
                 return;
             }
 
-            char last;
-            var breakSize = (stream.SkipWhile(c => c.IsLineTerminator(), out last) + 1);
+            var breakSize = peekable.SkipWhile(c => c.IsLineTerminator());
 
             while (true)
             {
-                bool matched;
-                var headerName = stream.ReadUntil(ch => ch == '\x3A', out matched); // ':'
-                if (!matched)
+                var headerName = peekable.TakeWhile(c => c != '\x3A'); // ':'
+                if (peekable.PeekChar() != '\x3A')
                 {
                     continue;
                 }
-                if (last != '\0')
-                {
-                    headerName = string.Concat(last, headerName);
-                    last = '\0';
-                }
-                headerName = string.Join(string.Empty,
-                    headerName.SkipWhile(c => c.IsWhiteSpace() || c.IsLineTerminator()));
+                peekable.ReadByte();
 
-                var headerValue = stream.ReadUntil(c => c.IsLineTerminator(), out matched);
-                if (!matched)
+                headerName = headerName.TrimStart();
+
+                var headerValue = peekable.TakeWhile(c => !c.IsLineTerminator());
+                if (!peekable.PeekChar().IsLineTerminator())
                 {
                     continue;
                 }
-                headerValue = string.Join(string.Empty,
-                    headerValue.TakeWhile(c => !c.IsLineTerminator())).Trim();
+                headerValue = headerValue.Trim();
 
                 callbacks.OnHeaderLine(headerName, headerValue);
 
-                var lineEnd = (stream.SkipWhile(c => c.IsLineTerminator(), out last) + 1);
+                var lineEnd = peekable.SkipWhile(c => c.IsLineTerminator());
                 if (lineEnd > breakSize)
                 {
                     break;
@@ -85,9 +82,8 @@ namespace HttpHelpers
             }
 
             var body = new List<byte>(1024);
-            if (last != '\0')
+            if (peekable.Peek(0) != -1)
             {
-                body.Add((byte) last);
                 while (true)
                 {
                     var raw = stream.ReadByte();

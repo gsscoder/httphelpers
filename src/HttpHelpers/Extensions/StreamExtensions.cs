@@ -39,63 +39,6 @@ namespace HttpHelpers.Extensions
     static class StreamExtensions
     {
         /*
-        static bool ParseNextHttpHeader(this Stream stream, out string name, out string value)
-        {
-            name = string.Empty;
-            value = string.Empty;
-            bool matched;
-            var headerName = stream.ReadUntil(ch => ch == '\x3A', out matched); // ':'
-            if (!matched)
-            {
-                return false;
-            }
-            headerName = headerName.TrimStartIf('\x20', '\xA', '\xD') // ' ', '\r', '\n'
-                .TrimEndIf('\x20');
-            name = headerName;
-
-            var headerValue = stream.ReadUntil(ch => (ch == '\xA' || ch == '\xD'), out matched);
-            if (!matched)
-            {
-                return false;
-            }
-            headerValue = headerValue.TrimStartIf('\x20')
-                .TrimEndIf('\x20');
-            value = headerValue;
-
-            return headerName.Length > 0 && headerValue.Length > 0;
-        }
-
-        static bool ParseHttpRequestLine(this Stream stream, out string method, out string uri, out string version)
-        {
-            method = string.Empty;
-            uri = string.Empty;
-            version = string.Empty;
-
-            bool matched;
-            var part1 = stream.ReadUntil(ch => ch == '\x20', out matched);
-            if (!matched)
-            {
-                return false;
-            }
-            method = part1;
-
-            var part2 = stream.ReadUntil(ch => ch == '\x20', out matched);
-            if (!matched)
-            {
-                return false;
-            }
-            uri = part2;
-
-            var part3 = stream.ReadUntil(ch => (ch == '\xA' || ch == '\xD'), out matched);
-            if (!matched)
-            {
-                return false;
-            }
-            version = part3;
-
-            return part1.Length > 0 && part2.Length > 0 && part3.Length > 0;
-        }
-
         static bool ParseHttpResponseLine(this Stream stream, out string version, out int? statusCode, out string reason)
         {
             version = string.Empty;
@@ -136,65 +79,9 @@ namespace HttpHelpers.Extensions
         }
         */
 
-        public static string ReadUntil(this Stream stream, Func<char, bool> match, out bool matched)
+        public static PeekableStream AsPeekableStream(this Stream stream)
         {
-            matched = false;
-            var builder = new StringBuilder();
-            while (true)
-            {
-                var c = stream.ReadByte();
-                var ch = (char) c;
-                if (match(ch))
-                {
-                    matched = true;
-                    break;
-                }
-                if (c == -1)
-                {
-                    break;
-                }
-                builder.Append(ch);
-            }
-            return builder.ToString();
-        }
-
-        public static string ReadUntil(this Stream stream, Func<char, bool> match)
-        {
-            var builder = new StringBuilder();
-            while (true)
-            {
-                var c = stream.ReadByte();
-                var ch = (char) c;
-                if (match(ch) || c == -1)
-                {
-                    break;
-                }
-                builder.Append(ch);
-            }
-            return builder.ToString();
-        }
-
-        public static int SkipWhile(this Stream stream, Func<char, bool> match, out char last)
-        {
-            last = '\0';
-            var skipped = 0;
-            while (true)
-            {
-                var c = stream.ReadByte();
-                var ch = (char)c;
-                if (c == -1)
-                {
-                    last = '\0';
-                    break;
-                }
-                if (!match(ch))
-                {
-                    last = ch;
-                    break;
-                }
-                skipped++;
-            }
-            return skipped;
+            return new PeekableStream(stream);
         }
     }
 }
