@@ -15,8 +15,9 @@ At glance:
 
 ```csharp
 // Given
-var stream = ("GET /gsscoder/httphelpers HTTP/1.1\r\n" +
-                "Content-Type: text/html; q=0.9, text/plain\r\n\r\n").AsStream();
+var stream = (
+  "GET /gsscoder/httphelpers HTTP/1.1\r\n" +
+  "Content-Type: text/html; q=0.9, text/plain\r\n\r\n").AsStream();
 var parser = new HttpParser();
 var callbacks = new FakeHttpParserCallbacks();
 
