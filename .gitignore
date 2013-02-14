@@ -2,6 +2,8 @@ src/HttpHelpers/bin/*
 src/HttpHelpers/obj
 src/HttpHelpers.Tests/bin/*
 src/HttpHelpers.Tests/obj
+src/HttpHelpers.Demo/bin/*
+src/HttpHelpers.Tests/obj
 *.suo
 *.userprefs
 *~

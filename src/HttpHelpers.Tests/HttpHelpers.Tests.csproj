@@ -53,10 +53,8 @@
     </Compile>
     <Compile Include="Extensions\ArrayExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Fakes\FakeHttpParserCallbacks.cs" />
-    <Compile Include="Unit\CharStreamFixture.cs" />
+    <Compile Include="Fakes\FakeHttpParserTarget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Unit\ByteArrayStreamFixture.cs" />
     <Compile Include="Unit\HttpParserFixture.cs" />
   </ItemGroup>
   <ItemGroup>

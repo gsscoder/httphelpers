@@ -6,11 +6,11 @@ C:\Users\vmuser\Documents\Visual Studio 2012\Projects\HttpHelpers.Demo\HttpHelpe
 C:\Users\vmuser\Documents\Visual Studio 2012\Projects\HttpHelpers.Demo\HttpHelpers.Demo\obj\Debug\HttpHelpers.Demo.csprojResolveAssemblyReference.cache
 C:\Users\vmuser\Documents\Visual Studio 2012\Projects\HttpHelpers.Demo\HttpHelpers.Demo\obj\Debug\HttpHelpers.Demo.exe
 C:\Users\vmuser\Documents\Visual Studio 2012\Projects\HttpHelpers.Demo\HttpHelpers.Demo\obj\Debug\HttpHelpers.Demo.pdb
+C:\Projects\HttpHelpers\src\HttpHelpers.Demo\obj\Debug\HttpHelpers.Demo.csprojResolveAssemblyReference.cache
 C:\Projects\HttpHelpers\src\HttpHelpers.Demo\bin\Debug\HttpHelpers.Demo.exe.config
 C:\Projects\HttpHelpers\src\HttpHelpers.Demo\bin\Debug\HttpHelpers.Demo.exe
 C:\Projects\HttpHelpers\src\HttpHelpers.Demo\bin\Debug\HttpHelpers.Demo.pdb
 C:\Projects\HttpHelpers\src\HttpHelpers.Demo\bin\Debug\HttpHelpers.dll
 C:\Projects\HttpHelpers\src\HttpHelpers.Demo\bin\Debug\HttpHelpers.pdb
-C:\Projects\HttpHelpers\src\HttpHelpers.Demo\obj\Debug\HttpHelpers.Demo.csprojResolveAssemblyReference.cache
 C:\Projects\HttpHelpers\src\HttpHelpers.Demo\obj\Debug\HttpHelpers.Demo.exe
 C:\Projects\HttpHelpers\src\HttpHelpers.Demo\obj\Debug\HttpHelpers.Demo.pdb

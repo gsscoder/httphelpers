@@ -5,35 +5,37 @@ I was very interested due my [Surf Http Library](https://github.com/gsscoder/sur
 After exchanging a few words, I thought it was interesting to have some general purpose HTTP helper types;
 but for me mine first project was not suitable to host them.
 
-Plase note that this API is in __early stages of development__.
-
 To build:
 ---
 MonoDevelop or Visual Studio.
 
 At glance:
 ---
- - The library exposes an HTTP request/response parser.
+ - The library exposes an async HTTP request/response parser.
  - See the example below, [unit tests](https://github.com/gsscoder/httphelpers/blob/master/src/HttpHelpers.Tests/Unit/HttpParserFixture.cs) or this [sample web server](https://gist.github.com/gsscoder/4945688) built with library HTTP parser (now included in the solution tree).
 
 ```csharp
-var stream = (
-  "GET /gsscoder/httphelpers HTTP/1.1\r\n" +
-  "Content-Type: text/html; q=0.9, text/plain\r\n\r\n").AsStream();
-var callbacks = new YourHttpParserCallbacksHandler();
+// Given
+var stream = ("GET /gsscoder/httphelpers HTTP/1.1\r\n" +
+                "Content-Type: text/html; q=0.9, text/plain\r\n\r\n").AsStream();
+var request = new FakeHttpRequest();
 
-var parsing = HttpParser.ParseRequestAsync(CharStreamBase.FromStream(stream), callbacks);
+// When
+HttpParser.ParseMessageAsync(stream, (method, uri, version) =>
+    {
+        request.Method = method;
+        request.Uri = uri;
+        request.Version = version;
+    },
+    (header, value) => 
+        request.Add(header, value)).Wait();
 
-Log.Write("parsing HTTP request ...");
-
-await parsing;
-
-callbacks.RequestLine.Method.Should().Be("GET");
-callbacks.RequestLine.Uri.Should().Be("/gsscoder/httphelpers");
-callbacks.RequestLine.Version.Should().Be("HTTP/1.1");
-callbacks.Headers.Should().HaveCount(c => c == 1);
-callbacks.Headers["Content-Type"].Should().Be("text/html; q=0.9, text/plain");
-callbacks.Body.Should().HaveCount(c => c == 0);
+// Than
+request.Method.Should().Be("GET");
+request.Uri.Should().Be("/gsscoder/httphelpers");
+request.Version.Should().Be("HTTP/1.1");
+request.Headers.Should().HaveCount(c => c == 1);
+request.Headers["Content-Type"].Should().Be("text/html; q=0.9, text/plain");
 ```
 
 Contacts:

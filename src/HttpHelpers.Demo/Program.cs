@@ -1,6 +1,6 @@
 ﻿/*
  * Easy HTTP Sample Server
- * Version 0.0.0.4 (based on HttpHelpers 0.1.0.19-alfa)
+ * Version 0.0.0.5 (based on HttpHelpers 0.1.0.21-alfa)
  * Giacomo Stelluti Scala (gsscoder@gmail.com)
  * Demonstrates use of https://github.com/gsscoder/httphelpers (work in progress)
  * How to execute: Copy & paste, then add a reference to HttpHelpers.dll
@@ -45,44 +45,13 @@ namespace HttpHelpers.Demo
         }
     }
 
-    public class Request : IHttpParserCallbacks
+    public class Request
     {
         public string Method = string.Empty;
         public string Uri = string.Empty;
         public string Version = string.Empty;
 
-        public Dictionary<string, string> Headers;
-
-        public void OnMessageBegin()
-        {
-            Headers = new Dictionary<string, string>();
-        }
-
-        public void OnRequestLine(string method, string uri, string version)
-        {
-            Method = method;
-            Uri = uri;
-            Version = version;
-        }
-
-        public void OnResponseLine(string version, int? code, string reason)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnHeaderLine(string name, string value)
-        {
-            Headers.Add(name, value);
-        }
-
-        public void OnBody(ArraySegment<byte> data)
-        {
-            // We don't need the body for this sample, so we can simply left the callback unimplemented
-        }
-
-        public void OnMessageEnd()
-        {
-        }
+        public Dictionary<string, string> Headers = new Dictionary<string, string>();
     }
 
     public class Server
@@ -123,11 +92,19 @@ namespace HttpHelpers.Demo
 
             var ns = new NetworkStream(socket);
 
-            //var request = Request.FromByteArray(ns.ToByteArray());
             var request = new Request();
-            var parsing = HttpParser.ParseRequestAsync(new ByteArrayCharStream(ns.ToByteArray()), request);
+            var parsing = HttpParser.ParseMessageAsync(ns, (method, uri, version) =>
+                {
+                    request.Method = method;
+                    request.Uri = uri;
+                    request.Version = version;
+                },
+                (header, value) =>
+                    request.Headers.Add(header, value));
             Trace.WriteLine("  parsing request async");
             await parsing;
+
+            // we are not interested in body for this demo
 
             if (request.Method.ToUpperInvariant() == "GET" &&
                 request.Uri.StartsWith("/hello", StringComparison.InvariantCultureIgnoreCase))

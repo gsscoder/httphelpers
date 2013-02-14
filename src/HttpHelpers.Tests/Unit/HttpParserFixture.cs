@@ -17,18 +17,24 @@ namespace HttpHelpers.Tests.Unit
             // Given
             var stream = ("GET /gsscoder/httphelpers HTTP/1.1\r\n" +
                           "Content-Type: text/html; q=0.9, text/plain\r\n\r\n").AsStream();
-            var callbacks = new FakeHttpParserCallbacks();
+            var target = new FakeHttpParserTarget();
 
             // When
-            HttpParser.ParseRequest(CharStreamBase.FromStream(stream), callbacks);
+            HttpParser.ParseMessageAsync(stream, (method, uri, version) =>
+                {
+                    target.RequestLine.Method = method;
+                    target.RequestLine.Uri = uri;
+                    target.RequestLine.Version = version;
+                },
+                (header, value) => 
+                    target.Headers.Add(header, value)).Wait();
 
             // Than
-            callbacks.RequestLine.Method.Should().Be("GET");
-            callbacks.RequestLine.Uri.Should().Be("/gsscoder/httphelpers");
-            callbacks.RequestLine.Version.Should().Be("HTTP/1.1");
-            callbacks.Headers.Should().HaveCount(c => c == 1);
-            callbacks.Headers["Content-Type"].Should().Be("text/html; q=0.9, text/plain");
-            callbacks.Body.Should().HaveCount(c => c == 0);
+            target.RequestLine.Method.Should().Be("GET");
+            target.RequestLine.Uri.Should().Be("/gsscoder/httphelpers");
+            target.RequestLine.Version.Should().Be("HTTP/1.1");
+            target.Headers.Should().HaveCount(c => c == 1);
+            target.Headers["Content-Type"].Should().Be("text/html; q=0.9, text/plain");
         }
 
         [Fact]
@@ -40,17 +46,23 @@ namespace HttpHelpers.Tests.Unit
                           "Accept: */*\r\n" +
                           "Content-Type: text/html; q=0.9, text/plain\r\n\r\n" +
                           "\r\n\r\n\r\n\r\n").AsStream();
-            var callbacks = new FakeHttpParserCallbacks();
+            var target = new FakeHttpParserTarget();
 
             // When
-            HttpParser.ParseRequest(CharStreamBase.FromStream(stream), callbacks);
+            HttpParser.ParseMessageAsync(stream, (method, uri, version) =>
+                {
+                    target.RequestLine.Method = method;
+                    target.RequestLine.Uri = uri;
+                    target.RequestLine.Version = version;
+                },
+                (header, value) => 
+                    target.Headers.Add(header, value)).Wait();
 
             // Than
-            callbacks.RequestLine.Method.Should().Be("GET");
-            callbacks.RequestLine.Uri.Should().Be("/gsscoder/httphelpers");
-            callbacks.RequestLine.Version.Should().Be("HTTP/1.1");
-            callbacks.Headers.Should().HaveCount(c => c == 3);
-            callbacks.Body.Should().HaveCount(c => c == 0);
+            target.RequestLine.Method.Should().Be("GET");
+            target.RequestLine.Uri.Should().Be("/gsscoder/httphelpers");
+            target.RequestLine.Version.Should().Be("HTTP/1.1");
+            target.Headers.Should().HaveCount(c => c == 3);
         }
 
         [Fact]
@@ -60,18 +72,24 @@ namespace HttpHelpers.Tests.Unit
             var stream = ("HTTP/1.1 200 OK\r\n" +
                           "Date: Sun, 08 Oct 2000 18:46:12 GMT\r\n\r\n" +
                           "<html><body><p>Heartbeat!</p></body></html>\r\n").AsStream();
-            var callbacks = new FakeHttpParserCallbacks();
+            var target = new FakeHttpParserTarget();
 
             // When
-            HttpParser.ParseResponse(CharStreamBase.FromStream(stream), callbacks);
+            HttpParser.ParseMessageAsync(stream, (version, code, reason) =>
+                {
+                    target.ResponseLine.Version = version;
+                    target.ResponseLine.Code = code;
+                    target.ResponseLine.Reason = reason;
+                },
+                (header, value) =>
+                    target.Headers.Add(header, value)).Wait();
 
             // Than
-            callbacks.ResponseLine.Version.Should().Be("HTTP/1.1");
-            callbacks.ResponseLine.Code.Should().Be(200);
-            callbacks.ResponseLine.Reason.Should().Be("OK");
-            callbacks.Headers.Should().HaveCount(c => c == 1);
-            callbacks.Headers["Date"].Should().Be("Sun, 08 Oct 2000 18:46:12 GMT");
-            callbacks.Body.ToDecodedString().Should().Be("<html><body><p>Heartbeat!</p></body></html>\r\n");
+            target.ResponseLine.Version.Should().Be("HTTP/1.1");
+            target.ResponseLine.Code.Should().Be("200");
+            target.ResponseLine.Reason.Should().Be("OK");
+            target.Headers.Should().HaveCount(c => c == 1);
+            target.Headers["Date"].Should().Be("Sun, 08 Oct 2000 18:46:12 GMT");
         }
     }
 }
