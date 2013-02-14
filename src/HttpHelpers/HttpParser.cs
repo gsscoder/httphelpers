@@ -30,6 +30,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using HttpHelpers.Extensions;
 #endregion
 
@@ -39,12 +40,30 @@ namespace HttpHelpers
     {
         public static void ParseRequest(CharStreamBase charStream, IHttpParserCallbacks callbacks)
         {
-            ParseMessage(callbacks, charStream, cs => ParseRequestLine(cs, callbacks));
+            if (charStream == null) throw new ArgumentNullException("charStream");
+
+            ParseMessage(charStream, callbacks, cs => ParseRequestLine(cs, callbacks));
+        }
+
+        public static Task ParseRequestAsync(CharStreamBase charStream, IHttpParserCallbacks callbacks)
+        {
+            if (charStream == null) throw new ArgumentNullException("charStream");
+
+            return ParseMessageAsync(charStream, callbacks, cs => ParseRequestLine(cs, callbacks));
         }
 
         public static void ParseResponse(CharStreamBase charStream, IHttpParserCallbacks callbacks)
         {
-            ParseMessage(callbacks, charStream, cs => ParseResponseLine(cs, callbacks));
+            if (charStream == null) throw new ArgumentNullException("charStream");
+
+            ParseMessage(charStream, callbacks, cs => ParseResponseLine(cs, callbacks));
+        }
+
+        public static Task ParseResponseAsync(CharStreamBase charStream, IHttpParserCallbacks callbacks)
+        {
+            if (charStream == null) throw new ArgumentNullException("charStream");
+
+            return ParseMessageAsync(charStream, callbacks, cs => ParseResponseLine(cs, callbacks));
         }
 
         private static bool ParseRequestLine(CharStreamBase charStream, IHttpParserCallbacks callbacks)
@@ -105,7 +124,13 @@ namespace HttpHelpers
             return true;
         }
 
-        private static void ParseMessage(IHttpParserCallbacks callbacks, CharStreamBase charStream,
+        private static Task ParseMessageAsync(CharStreamBase charStream, IHttpParserCallbacks callbacks,
+            Func<CharStreamBase, bool> parseHeading)
+        {
+            return Task.Run(() => ParseMessage(charStream, callbacks, parseHeading));
+        }
+
+        private static void ParseMessage(CharStreamBase charStream, IHttpParserCallbacks callbacks,
             Func<CharStreamBase, bool> parseHeading)
         {
             callbacks.OnMessageBegin();

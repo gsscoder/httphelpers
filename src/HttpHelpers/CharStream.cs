@@ -6,7 +6,7 @@ using System.Text;
 
 namespace HttpHelpers
 {
-    public class CharStream : CharStreamBase, IDisposable
+    public class CharStream : CharStreamBase
     {
         public CharStream(Stream stream)
         {
@@ -31,7 +31,7 @@ namespace HttpHelpers
             return (char) PeekByte();
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             Dispose(true);
 

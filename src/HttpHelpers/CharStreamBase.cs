@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HttpHelpers
 {
-    public abstract class CharStreamBase
+    public abstract class CharStreamBase : IDisposable
     {
         public abstract int ReadByte();
         
@@ -68,5 +68,7 @@ namespace HttpHelpers
             }
             return skipped;
         }
+
+        public abstract void Dispose();
     }
 }

@@ -1,6 +1,6 @@
 ﻿/*
  * Easy HTTP Sample Server
- * Version 0.0.0.3 (based on HttpHelpers 0.1.0.15-alfa)
+ * Version 0.0.0.4 (based on HttpHelpers 0.1.0.19-alfa)
  * Giacomo Stelluti Scala (gsscoder@gmail.com)
  * Demonstrates use of https://github.com/gsscoder/httphelpers (work in progress)
  * How to execute: Copy & paste, then add a reference to HttpHelpers.dll
@@ -52,16 +52,6 @@ namespace HttpHelpers.Demo
         public string Version = string.Empty;
 
         public Dictionary<string, string> Headers;
-
-        public static Request FromByteArray(IEnumerable<byte> buffer)
-        {
-            var parsed = new Request();
-            //
-            // Here we parse the incoming HTTP Request
-            //
-            HttpParser.ParseRequest(CharStreamBase.FromByteArray(buffer), parsed);
-            return parsed;
-        }
 
         public void OnMessageBegin()
         {
@@ -127,13 +117,18 @@ namespace HttpHelpers.Demo
                 }, TaskContinuationOptions.OnlyOnRanToCompletion);
         }
 
-        private static void HandleConnection(Socket socket)
+        private static async void HandleConnection(Socket socket)
         {
             Trace.WriteLine("client accepted");
 
             var ns = new NetworkStream(socket);
 
-            var request = Request.FromByteArray(ns.ToByteArray());
+            //var request = Request.FromByteArray(ns.ToByteArray());
+            var request = new Request();
+            var parsing = HttpParser.ParseRequestAsync(new ByteArrayCharStream(ns.ToByteArray()), request);
+            Trace.WriteLine("  parsing request async");
+            await parsing;
+
             if (request.Method.ToUpperInvariant() == "GET" &&
                 request.Uri.StartsWith("/hello", StringComparison.InvariantCultureIgnoreCase))
             {

@@ -38,6 +38,10 @@ namespace HttpHelpers
             return (char)PeekByte();
         }
 
+        public override void Dispose()
+        {
+        }
+
         private int _offset;
         private byte _byte;
         private readonly IEnumerable<byte> _buffer;
