@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpHelpers", "src\HttpHelpers\HttpHelpers.csproj", "{80CEBBB3-116B-4620-8BD1-5F315069CAAD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpHelpers.Tests", "src\HttpHelpers.Tests\HttpHelpers.Tests.csproj", "{CDA56BD7-531E-4551-9905-D54A005E9EFA}"

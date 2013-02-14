@@ -1,3 +1,8 @@
+2012-02-14  Giacomo Stelluti Scala  <gsscoder@gmail.com>
+
+  * PeekableStream refactored as CharStream / ICharStream.
+  * Added ByteArrayStream for read directly from an IEnumerable<byte>.
+
 2012-02-13  Giacomo Stelluti Scala  <gsscoder@gmail.com>
 
   * Parser re-implemented on the model the one found on Surf Http Library.

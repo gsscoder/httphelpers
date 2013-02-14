@@ -42,98 +42,100 @@ namespace HttpHelpers
             get { return _defaultParser ?? (_defaultParser = new HttpParser()); }
         }
 
-        public void ParseRequest(IHttpParserCallbacks callbacks, Stream stream)
+        public void ParseRequest(IHttpParserCallbacks callbacks, CharStreamBase charStream)
         {
-            ParseMessage(callbacks, stream, peekable =>
-                {
-                    var method = peekable.TakeWhile(c => !c.IsWhiteSpace());
-                    if (!peekable.PeekChar().IsWhiteSpace())
-                    {
-                        return false;
-                    }
-                    peekable.SkipWhile(c => c.IsWhiteSpace());
-
-                    var uri = peekable.TakeWhile(c => !c.IsWhiteSpace());
-                    if (!peekable.PeekChar().IsWhiteSpace())
-                    {
-                        return false;
-                    }
-                    peekable.SkipWhile(c => c.IsWhiteSpace());
-
-                    var version = peekable.TakeWhile(c => !c.IsLineTerminator());
-                    if (!peekable.PeekChar().IsLineTerminator())
-                    {
-                        return false;
-                    }
-                    callbacks.OnRequestLine(method, uri, version);
-
-                    return true;
-                });
+            ParseMessage(callbacks, charStream, cs => ParseRequestLine(callbacks, cs));
         }
 
-        public void ParseResponse(IHttpParserCallbacks callbacks, Stream stream)
+        public void ParseResponse(IHttpParserCallbacks callbacks, CharStreamBase charStream)
         {
-            ParseMessage(callbacks, stream, peekable =>
+            ParseMessage(callbacks, charStream, cs => ParseResponseLine(callbacks, cs));
+        }
+
+        private static bool ParseRequestLine(IHttpParserCallbacks callbacks, CharStreamBase charStream)
+        {
+            var method = charStream.TakeWhile(c => !c.IsWhiteSpace());
+            if (!charStream.PeekChar().IsWhiteSpace())
             {
-                var version = peekable.TakeWhile(c => !c.IsWhiteSpace());
-                if (!peekable.PeekChar().IsWhiteSpace())
-                {
-                    return false;
-                }
-                peekable.SkipWhile(c => c.IsWhiteSpace());
+                return false;
+            }
+            charStream.SkipWhile(c => c.IsWhiteSpace());
 
-                var rawCode = peekable.TakeWhile(c => !c.IsWhiteSpace());
-                if (!peekable.PeekChar().IsWhiteSpace())
-                {
-                    return false;
-                }
-                peekable.SkipWhile(c => c.IsWhiteSpace());
-                int parsedCode;
-                int? code = null;
-                if (int.TryParse(rawCode, out parsedCode))
-                {
-                    code = parsedCode;
-                }
+            var uri = charStream.TakeWhile(c => !c.IsWhiteSpace());
+            if (!charStream.PeekChar().IsWhiteSpace())
+            {
+                return false;
+            }
+            charStream.SkipWhile(c => c.IsWhiteSpace());
 
-                var reason = peekable.TakeWhile(c => !c.IsLineTerminator());
-                if (!peekable.PeekChar().IsLineTerminator())
-                {
-                    return false;
-                }
-                callbacks.OnResponseLine(version, code, reason);
+            var version = charStream.TakeWhile(c => !c.IsLineTerminator());
+            if (!charStream.PeekChar().IsLineTerminator())
+            {
+                return false;
+            }
+            callbacks.OnRequestLine(method, uri, version);
 
-                return true;
-            });
+            return true;
         }
 
-        private void ParseMessage(IHttpParserCallbacks callbacks, Stream stream,
-            Func<PeekableReader, bool> parseHeading)
+        private static bool ParseResponseLine(IHttpParserCallbacks callbacks, CharStreamBase charStream)
         {
-            var peekable = new PeekableReader(stream); //stream.AsPeekableStream();
+            var version = charStream.TakeWhile(c => !c.IsWhiteSpace());
+            if (!charStream.PeekChar().IsWhiteSpace())
+            {
+                return false;
+            }
+            charStream.SkipWhile(c => c.IsWhiteSpace());
 
+            var rawCode = charStream.TakeWhile(c => !c.IsWhiteSpace());
+            if (!charStream.PeekChar().IsWhiteSpace())
+            {
+                return false;
+            }
+            charStream.SkipWhile(c => c.IsWhiteSpace());
+            int parsedCode;
+            int? code = null;
+            if (int.TryParse(rawCode, out parsedCode))
+            {
+                code = parsedCode;
+            }
+
+            var reason = charStream.TakeWhile(c => !c.IsLineTerminator());
+            if (!charStream.PeekChar().IsLineTerminator())
+            {
+                return false;
+            }
+            callbacks.OnResponseLine(version, code, reason);
+
+            return true;
+        }
+
+        private void ParseMessage(IHttpParserCallbacks callbacks, CharStreamBase charStream,
+            Func<CharStreamBase, bool> parseHeading)
+        {
             callbacks.OnMessageBegin();
 
-            if (!parseHeading(peekable))
+            if (!parseHeading(charStream))
             {
                 callbacks.OnMessageEnd();
                 return;
             }
 
-            var breakSize = peekable.SkipWhile(c => c.IsLineTerminator());
+            var breakSize = charStream.SkipWhile(c => c.IsLineTerminator());
 
             while (true)
             {
-                var headerName = peekable.TakeWhile(c => c != '\x3A'); // ':'
-                if (peekable.PeekChar() != '\x3A')
+                var headerName = charStream.TakeWhile(c => c != '\x3A'); // ':'
+                if (charStream.PeekChar() != '\x3A')
                 {
                     continue;
                 }
-                peekable.ReadByte();
+                charStream.ReadByte();
 
                 headerName = headerName.TrimStart();
 
-                var headerValue = peekable.TakeWhile(c => !c.IsLineTerminator());
-                if (!peekable.PeekChar().IsLineTerminator())
+                var headerValue = charStream.TakeWhile(c => !c.IsLineTerminator());
+                if (!charStream.PeekChar().IsLineTerminator())
                 {
                     continue;
                 }
@@ -141,7 +143,7 @@ namespace HttpHelpers
 
                 callbacks.OnHeaderLine(headerName, headerValue);
 
-                var lineEnd = peekable.SkipWhile(c => c.IsLineTerminator());
+                var lineEnd = charStream.SkipWhile(c => c.IsLineTerminator());
                 if (lineEnd > breakSize)
                 {
                     break;
@@ -149,11 +151,11 @@ namespace HttpHelpers
             }
 
             var body = new List<byte>(1024);
-            if (peekable.PeekByte() != -1)
+            if (charStream.PeekByte() != -1)
             {
                 while (true)
                 {
-                    var raw = peekable.ReadByte();
+                    var raw = charStream.ReadByte();
                     if (raw == -1)
                     {
                         break;

@@ -32,11 +32,7 @@ using System.IO;
 
 namespace HttpHelpers.Extensions
 {
-    static class StreamExtensions
+    public static class StreamExtensions
     {
-        //public static PeekableStream AsPeekableStream(this Stream stream)
-        //{
-        //    return new PeekableStream(stream);
-        //}
     }
 }

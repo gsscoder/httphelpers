@@ -21,7 +21,7 @@ namespace HttpHelpers.Tests.Unit
             var callbacks = new FakeHttpParserCallbacks();
 
             // When
-            parser.ParseRequest(callbacks, stream);
+            parser.ParseRequest(callbacks, CharStreamBase.FromStream(stream));
 
             // Than
             callbacks.RequestLine.Method.Should().Be("GET");
@@ -45,7 +45,7 @@ namespace HttpHelpers.Tests.Unit
             var callbacks = new FakeHttpParserCallbacks();
 
             // When
-            parser.ParseRequest(callbacks, stream);
+            parser.ParseRequest(callbacks, CharStreamBase.FromStream(stream));
 
             // Than
             callbacks.RequestLine.Method.Should().Be("GET");
@@ -66,7 +66,7 @@ namespace HttpHelpers.Tests.Unit
             var callbacks = new FakeHttpParserCallbacks();
 
             // When
-            parser.ParseResponse(callbacks, stream);
+            parser.ParseResponse(callbacks,  CharStreamBase.FromStream(stream));
 
             // Than
             callbacks.ResponseLine.Version.Should().Be("HTTP/1.1");

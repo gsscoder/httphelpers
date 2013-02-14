@@ -8,16 +8,16 @@ using Xunit;
 
 namespace HttpHelpers.Tests.Unit
 {
-    public class PeekableReaderFixture
+    public class ByteArrayStreamFixture
     {
         [Fact]
         public void Should_peek_next_byte()
         {
             // Given
-            var stream = "abc".AsStream();
+            var bytes = "abc".AsByteArray();
 
-            // When
-            var reader = new PeekableReader(stream);
+            // Wheny
+            var reader = new ByteArrayCharStream(bytes);
 
             // Than
             reader.PeekByte().Should().Be('a');
