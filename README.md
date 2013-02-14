@@ -1,10 +1,9 @@
-﻿Http Helpers 0.1.0.11 alfa.
+﻿Http Helpers 0.1.0.15 alfa.
 ===
 This project was born because [@davidfawl](https://twitter.com/davidfowl) wrote on Twitter about the creation of an [OWIN HTTP client](https://github.com/davidfowl/OwinHttpClient).
 I was very interested due my [Surf Http Library](https://github.com/gsscoder/surfhttp), created mainly for testing purposes.
 After exchanging a few words, I thought it was interesting to have some general purpose HTTP helper types;
 but for me mine first project was not suitable to host them.
-Please note that for now __this is just a stub__, a placeholder to start working on the subject.
 
 To build:
 ---
@@ -12,19 +11,18 @@ MonoDevelop or Visual Studio.
 
 At glance:
 ---
-The library exposes an HTTP request/response parser.
-See the example below, [unit tests](https://github.com/gsscoder/httphelpers/blob/master/src/HttpHelpers.Tests/Unit/HttpParserFixture.cs) or this [sample web server](https://gist.github.com/gsscoder/4945688) built with library HTTP parser.
+ - The library exposes an HTTP request/response parser.
+ - See the example below, [unit tests](https://github.com/gsscoder/httphelpers/blob/master/src/HttpHelpers.Tests/Unit/HttpParserFixture.cs) or this [sample web server](https://gist.github.com/gsscoder/4945688) built with library HTTP parser (now included in the solution tree).
 
 ```csharp
 // Given
 var stream = (
   "GET /gsscoder/httphelpers HTTP/1.1\r\n" +
   "Content-Type: text/html; q=0.9, text/plain\r\n\r\n").AsStream();
-var parser = new HttpParser();
 var callbacks = new FakeHttpParserCallbacks();
 
 // When
-parser.ParseRequest(callbacks, CharStreamBase.FromStream(stream));
+HttpParser.ParseRequest(CharStreamBase.FromStream(stream), callbacks);
 
 // Than
 callbacks.RequestLine.Method.Should().Be("GET");

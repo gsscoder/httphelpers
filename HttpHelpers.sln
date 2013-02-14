@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Welcome", ".Welcome", "{8B
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpHelpers.Demo", "src\HttpHelpers.Demo\HttpHelpers.Demo.csproj", "{18097320-8B53-4AED-8EAA-8A9381B308F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{CDA56BD7-531E-4551-9905-D54A005E9EFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDA56BD7-531E-4551-9905-D54A005E9EFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDA56BD7-531E-4551-9905-D54A005E9EFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18097320-8B53-4AED-8EAA-8A9381B308F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18097320-8B53-4AED-8EAA-8A9381B308F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18097320-8B53-4AED-8EAA-8A9381B308F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18097320-8B53-4AED-8EAA-8A9381B308F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

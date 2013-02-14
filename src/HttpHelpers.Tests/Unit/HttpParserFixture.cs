@@ -17,11 +17,10 @@ namespace HttpHelpers.Tests.Unit
             // Given
             var stream = ("GET /gsscoder/httphelpers HTTP/1.1\r\n" +
                           "Content-Type: text/html; q=0.9, text/plain\r\n\r\n").AsStream();
-            var parser = new HttpParser();
             var callbacks = new FakeHttpParserCallbacks();
 
             // When
-            parser.ParseRequest(callbacks, CharStreamBase.FromStream(stream));
+            HttpParser.ParseRequest(CharStreamBase.FromStream(stream), callbacks);
 
             // Than
             callbacks.RequestLine.Method.Should().Be("GET");
@@ -41,11 +40,10 @@ namespace HttpHelpers.Tests.Unit
                           "Accept: */*\r\n" +
                           "Content-Type: text/html; q=0.9, text/plain\r\n\r\n" +
                           "\r\n\r\n\r\n\r\n").AsStream();
-            var parser = new HttpParser();
             var callbacks = new FakeHttpParserCallbacks();
 
             // When
-            parser.ParseRequest(callbacks, CharStreamBase.FromStream(stream));
+            HttpParser.ParseRequest(CharStreamBase.FromStream(stream), callbacks);
 
             // Than
             callbacks.RequestLine.Method.Should().Be("GET");
@@ -62,11 +60,10 @@ namespace HttpHelpers.Tests.Unit
             var stream = ("HTTP/1.1 200 OK\r\n" +
                           "Date: Sun, 08 Oct 2000 18:46:12 GMT\r\n\r\n" +
                           "<html><body><p>Heartbeat!</p></body></html>\r\n").AsStream();
-            var parser = new HttpParser();
             var callbacks = new FakeHttpParserCallbacks();
 
             // When
-            parser.ParseResponse(callbacks,  CharStreamBase.FromStream(stream));
+            HttpParser.ParseResponse(CharStreamBase.FromStream(stream), callbacks);
 
             // Than
             callbacks.ResponseLine.Version.Should().Be("HTTP/1.1");

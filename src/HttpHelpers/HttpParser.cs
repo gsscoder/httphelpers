@@ -35,24 +35,19 @@ using HttpHelpers.Extensions;
 
 namespace HttpHelpers
 {
-    public class HttpParser
+    public static class HttpParser
     {
-        public static HttpParser Default
+        public static void ParseRequest(CharStreamBase charStream, IHttpParserCallbacks callbacks)
         {
-            get { return _defaultParser ?? (_defaultParser = new HttpParser()); }
+            ParseMessage(callbacks, charStream, cs => ParseRequestLine(cs, callbacks));
         }
 
-        public void ParseRequest(IHttpParserCallbacks callbacks, CharStreamBase charStream)
+        public static void ParseResponse(CharStreamBase charStream, IHttpParserCallbacks callbacks)
         {
-            ParseMessage(callbacks, charStream, cs => ParseRequestLine(callbacks, cs));
+            ParseMessage(callbacks, charStream, cs => ParseResponseLine(cs, callbacks));
         }
 
-        public void ParseResponse(IHttpParserCallbacks callbacks, CharStreamBase charStream)
-        {
-            ParseMessage(callbacks, charStream, cs => ParseResponseLine(callbacks, cs));
-        }
-
-        private static bool ParseRequestLine(IHttpParserCallbacks callbacks, CharStreamBase charStream)
+        private static bool ParseRequestLine(CharStreamBase charStream, IHttpParserCallbacks callbacks)
         {
             var method = charStream.TakeWhile(c => !c.IsWhiteSpace());
             if (!charStream.PeekChar().IsWhiteSpace())
@@ -78,7 +73,7 @@ namespace HttpHelpers
             return true;
         }
 
-        private static bool ParseResponseLine(IHttpParserCallbacks callbacks, CharStreamBase charStream)
+        private static bool ParseResponseLine(CharStreamBase charStream, IHttpParserCallbacks callbacks)
         {
             var version = charStream.TakeWhile(c => !c.IsWhiteSpace());
             if (!charStream.PeekChar().IsWhiteSpace())
@@ -110,7 +105,7 @@ namespace HttpHelpers
             return true;
         }
 
-        private void ParseMessage(IHttpParserCallbacks callbacks, CharStreamBase charStream,
+        private static void ParseMessage(IHttpParserCallbacks callbacks, CharStreamBase charStream,
             Func<CharStreamBase, bool> parseHeading)
         {
             callbacks.OnMessageBegin();
@@ -168,7 +163,5 @@ namespace HttpHelpers
 
             callbacks.OnMessageEnd();
         }
-
-        private static volatile HttpParser _defaultParser;
     }
 }
