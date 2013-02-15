@@ -27,8 +27,6 @@
 //
 #endregion
 #region Using Directives
-using System;
-using System.Globalization;
 using System.Linq;
 #endregion
 

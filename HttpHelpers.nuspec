@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <version>0.1.0.19-alfa</version>
+    <version>0.1.2-alfa</version>
     <authors>Giacomo Stelluti Scala</authors>
     <owners>Giacomo Stelluti Scala</owners>
     <licenseUrl>https://raw.github.com/gsscoder/httphelpers/master/doc/LICENSE</licenseUrl>
     <projectUrl>https://github.com/gsscoder/httphelpers</projectUrl>
     <iconUrl>https://raw.github.com/gsscoder/httphelpers/master/HttpHelpers.png</iconUrl>
-    <id>HttpHelpers</id>
+    <id>HttpHelpers.Sources</id>
     <title>HTTP Helpers</title>
-    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The library exposes an asynchronous HTTP request and response parser.</description>
     <copyright>2013 Giacomo Stelluti Scala</copyright>
     <tags>HTTP Message Request Response Parser Helpers</tags>
   </metadata>
   <files>
-    <file src="HttpHelpers/src/HttpHelpers/HttpParser.cs" target="content/App_Packages/HttpHelpers.Sources.0.1.0.19-alfa/HttpParser.cs" />
-    <file src="HttpHelpers/src/HttpHelpers/Extensions/CharExtensions.cs" target="content/App_Packages/HttpHelpers.Sources.0.1.0.19-alfa/Extensions/CharExtensions.cs" />
-    <file src="HttpHelpers/src/HttpHelpers/Extensions/StringExtensions.cs" target="content/App_Packages/HttpHelpers.Sources.0.1.0.19-alfa/Extensions/StringExtensions.cs" />
-    <file src="HttpHelpers/src/HttpHelpers/Extensions/StringReaderExtensions.cs" target="content/App_Packages/HttpHelpers.Sources.0.1.0.19-alfa/Extensions/StringReaderExtensions.cs" />    
+    <file src="src\HttpHelpers\HttpParser.cs" target="content\App_Packages\HttpHelpers.Sources.0.1.2-alfa\HttpParser.cs" />
+    <file src="src\HttpHelpers\Extensions\CharExtensions.cs" target="content\App_Packages\HttpHelpers.Sources.0.1.2-alfa\Extensions\CharExtensions.cs" />
+    <file src="src\HttpHelpers\Extensions\StringExtensions.cs" target="content\App_Packages\HttpHelpers.Sources.0.1.2-alfa\Extensions\StringExtensions.cs" />
+    <file src="src\HttpHelpers\Extensions\StringReaderExtensions.cs" target="content\App_Packages\HttpHelpers.Sources.0.1.2-alfa\Extensions\StringReaderExtensions.cs" />    
   </files>
 </package>

@@ -3,7 +3,7 @@ src/HttpHelpers/obj
 src/HttpHelpers.Tests/bin/*
 src/HttpHelpers.Tests/obj
 src/HttpHelpers.Demo/bin/*
-src/HttpHelpers.Tests/obj
+src/HttpHelpers.Demo/obj
 *.suo
 *.userprefs
 *~
@@ -17,3 +17,4 @@ src/HttpHelpers.Tests/obj
 _old
 *.mdb
 *.pdb
+*.nupkg

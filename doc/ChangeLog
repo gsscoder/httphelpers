@@ -1,3 +1,8 @@
+2012-02-15  Giacomo Stelluti Scala  <gsscoder@gmail.com>
+
+  * Created NuGet package.
+  * Version update as defined in semver.org.
+
 2012-02-14  Giacomo Stelluti Scala  <gsscoder@gmail.com>
 
   * Rewritten to be truly asyc.

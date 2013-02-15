@@ -1,4 +1,4 @@
-﻿Http Helpers 0.1.0.19 alfa.
+﻿Http Helpers 0.1.2.0 alfa.
 ===
 This project was born because [@davidfawl](https://twitter.com/davidfowl) wrote on Twitter about the creation of an [OWIN HTTP client](https://github.com/davidfowl/OwinHttpClient).
 I was very interested due my [Surf Http Library](https://github.com/gsscoder/surfhttp), created mainly for testing purposes.
