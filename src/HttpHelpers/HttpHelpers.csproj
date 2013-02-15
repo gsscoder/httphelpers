@@ -42,7 +42,6 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Extensions\CharExtensions.cs" />
-    <Compile Include="Extensions\CharStreamBaseExtensions.cs" />
     <Compile Include="Extensions\StringReaderExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs">
       <SubType>Code</SubType>
