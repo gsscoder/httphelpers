@@ -5,7 +5,7 @@ I was very interested due my [Surf Http Library](https://github.com/gsscoder/sur
 After exchanging a few words, I thought it was interesting to have some general purpose HTTP helper types;
 but for me mine first project was not suitable to host them.
 
-![NuGet: Install-Package HttpHelpers.Sources -Pre](https://raw.github.com/gsscoder/httphelpers/master/HttpHelpers.png)
+![NuGet: Install-Package HttpHelpers.Sources -Pre](https://raw.github.com/gsscoder/httphelpers/master/HttpHelpersNuGet.png)
 
 To build:
 ---
