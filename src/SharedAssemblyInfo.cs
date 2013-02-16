@@ -27,6 +27,7 @@
 //
 #endregion
 #region Using Directives
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Resources;
 #endregion
@@ -34,8 +35,10 @@ using System.Resources;
 [assembly: AssemblyProduct("Http Helpers Library")]
 [assembly: AssemblyDescription("Http Helpers for .NET")]
 [assembly: AssemblyCopyright("Copyright (C) 2013 Giacomo Stelluti Scala")]
-[assembly: AssemblyVersion("0.1.4.0")]
-[assembly: AssemblyFileVersion("0.1.4.0")]
-[assembly: AssemblyInformationalVersion("0.1.4-alfa")]
+[assembly: AssemblyVersion("0.1.5.0")]
+[assembly: AssemblyFileVersion("0.1.5.0")]
+
+[module: SuppressMessage("Microsoft.Usage", "CA2243:AttributeStringLiteralsShouldParseCorrectly", Justification = "Informational version uses http://semver.org notation")]
+[assembly: AssemblyInformationalVersion("0.1.5-alfa")]
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: AssemblyCulture("")]

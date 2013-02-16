@@ -7,14 +7,14 @@ using Xunit;
 
 namespace HttpHelpers.Tests.Unit
 {
-    public abstract class HttpParserBaseFixture
+    public abstract partial class HttpParserFixture
     {
         protected Func<Stream,
             Action<string, string, string>, // onHeading
             Action<string, string>, // onHeader
             bool> ParseMethod;
 
-        protected HttpParserBaseFixture(bool asyncApi)
+        protected HttpParserFixture(bool asyncApi)
         {
             if (asyncApi)
             {
@@ -114,6 +114,32 @@ namespace HttpHelpers.Tests.Unit
             target.ResponseLine.Reason.Should().Be("OK");
             target.Headers.Should().HaveCount(c => c == 1);
             target.Headers["Date"].Should().Be("Sun, 08 Oct 2000 18:46:12 GMT");
+        }
+
+        [Fact]
+        public void Should_return_false_when_message_is_malformed()
+        {
+            // Given
+            var stream = "ET /g\rsscoder/httphel\0pers HTTP/".AsStream();
+
+            // When
+            var result = ParseMethod(stream, (segm0, segm1, segm2) => { }, (header, value) => { });
+
+            // Than
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public void Should_return_false_when_message_is_empty()
+        {
+            // Given
+            var stream = "".AsStream();
+
+            // When
+            var result = ParseMethod(stream, (segm0, segm1, segm2) => { }, (header, value) => { });
+
+            // Than
+            result.Should().BeFalse();
         }
     }
 }

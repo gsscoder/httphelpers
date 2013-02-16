@@ -40,6 +40,11 @@ namespace HttpHelpers
         {
             public static bool ParseHeadingLine(string line, Action<string, string, string> onHeadingLine)
             {
+                if (string.IsNullOrWhiteSpace(line))
+                {
+                    return false;
+                }
+
                 var stringReader = new StringReader(line);
 
                 var item1 = stringReader.TakeWhile(c => !c.IsWhiteSpace());

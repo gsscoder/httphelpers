@@ -1,6 +1,6 @@
 ﻿/*
  * Easy HTTP Sample Server
- * Version 0.0.0.5 (based on HttpHelpers 0.1.0.21-alfa)
+ * Version 0.0.0.6 (based on HttpHelpers 0.1.5.0-alfa)
  * Giacomo Stelluti Scala (gsscoder@gmail.com)
  * Demonstrates use of https://github.com/gsscoder/httphelpers (work in progress)
  * How to execute: Copy & paste, then add a reference to HttpHelpers.dll
@@ -93,7 +93,10 @@ namespace HttpHelpers.Demo
             var ns = new NetworkStream(socket);
 
             var request = new Request();
-            var parsing = HttpParser.ParseMessageAsync(ns, (method, uri, version) =>
+            //
+            // for an async parsing demo: https://github.com/gsscoder/owinhttplistener
+            //
+            var result = HttpParser.ParseMessage(ns, (method, uri, version) =>
                 {
                     request.Method = method;
                     request.Uri = uri;
@@ -101,8 +104,10 @@ namespace HttpHelpers.Demo
                 },
                 (header, value) =>
                     request.Headers.Add(header, value));
-            Trace.WriteLine("  parsing request async");
-            await parsing;
+            if (!result)
+            {
+                Trace.WriteLine("  parsing failed");
+            }
 
             // we are not interested in body for this demo
 

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace HttpHelpers.Tests.Fakes
 {
-    class FakeHttpParserTarget //: IHttpParserCallbacks
+    class FakeHttpParserTarget
     {
         internal struct FakeRequestLine
         {

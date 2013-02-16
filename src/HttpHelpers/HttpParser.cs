@@ -33,6 +33,7 @@
 #endregion
 #region Using Directives
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 #endregion
@@ -46,6 +47,12 @@ namespace HttpHelpers
             Action<string, string, string> onHeadingLine,
             Action<string, string> onHeaderLine)
         {
+            // why Debug.Assert? in production code there's no excuse to pass null delegates
+            Debug.Assert(onHeadingLine != null);
+            Debug.Assert(onHeaderLine != null);
+
+            if (stream == null) { throw new ArgumentNullException("stream"); }
+
             var reader = new StreamReader(stream);
 
             var headingParsing = await ParseHeadingLineAsync(reader, onHeadingLine);
@@ -75,6 +82,12 @@ namespace HttpHelpers
             Action<string, string, string> onHeadingLine,
             Action<string, string> onHeaderLine)
         {
+            // why Debug.Assert? in production code there's no excuse to pass null delegates
+            Debug.Assert(onHeadingLine != null);
+            Debug.Assert(onHeaderLine != null);
+
+            if (stream == null) { throw new ArgumentNullException("stream"); }
+
             var reader = new StreamReader(stream);
 
             var headingParsing = RawParser.ParseHeadingLine(reader.ReadLine(), onHeadingLine);

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <version>0.1.4-alfa</version>
+    <version>0.1.5-alfa</version>
     <authors>Giacomo Stelluti Scala</authors>
     <owners>Giacomo Stelluti Scala</owners>
     <licenseUrl>https://raw.github.com/gsscoder/httphelpers/master/doc/LICENSE</licenseUrl>
@@ -15,10 +15,10 @@
     <tags>HTTP Message Request Response Parser Helpers</tags>
   </metadata>
   <files>
-    <file src="src\HttpHelpers\HttpParser.cs" target="content\App_Packages\HttpHelpers.Sources.0.1.4-alfa\HttpParser.cs" />
-    <file src="src\HttpHelpers\HttpParser.RawParser.cs" target="content\App_Packages\HttpHelpers.Sources.0.1.4-alfa\HttpParser.RawParser.cs" />
-    <file src="src\HttpHelpers\Extensions\CharExtensions.cs" target="content\App_Packages\HttpHelpers.Sources.0.1.4-alfa\Extensions\CharExtensions.cs" />
-    <file src="src\HttpHelpers\Extensions\StringExtensions.cs" target="content\App_Packages\HttpHelpers.Sources.0.1.4-alfa\Extensions\StringExtensions.cs" />
-    <file src="src\HttpHelpers\Extensions\StringReaderExtensions.cs" target="content\App_Packages\HttpHelpers.Sources.0.1.4-alfa\Extensions\StringReaderExtensions.cs" />    
+    <file src="src\HttpHelpers\HttpParser.cs" target="content\App_Packages\HttpHelpers.Sources.0.1.5-alfa\HttpParser.cs" />
+    <file src="src\HttpHelpers\HttpParser.RawParser.cs" target="content\App_Packages\HttpHelpers.Sources.0.1.5-alfa\HttpParser.RawParser.cs" />
+    <file src="src\HttpHelpers\Extensions\CharExtensions.cs" target="content\App_Packages\HttpHelpers.Sources.0.1.5-alfa\Extensions\CharExtensions.cs" />
+    <file src="src\HttpHelpers\Extensions\StringExtensions.cs" target="content\App_Packages\HttpHelpers.Sources.0.1.5-alfa\Extensions\StringExtensions.cs" />
+    <file src="src\HttpHelpers\Extensions\StringReaderExtensions.cs" target="content\App_Packages\HttpHelpers.Sources.0.1.5-alfa\Extensions\StringReaderExtensions.cs" />    
   </files>
 </package>

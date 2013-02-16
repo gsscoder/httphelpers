@@ -14,6 +14,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Welcome", ".Welcome", "{8B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpHelpers.Demo", "src\HttpHelpers.Demo\HttpHelpers.Demo.csproj", "{18097320-8B53-4AED-8EAA-8A9381B308F1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Develop", "Develop", "{C138D320-7799-4C40-A9D3-7C13E47AA1AE}"
+	ProjectSection(SolutionItems) = preProject
+		src\HttpHelpers\HttpHelpers.FxCop = src\HttpHelpers\HttpHelpers.FxCop
+		HttpHelpers.nuspec = HttpHelpers.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,5 +41,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C138D320-7799-4C40-A9D3-7C13E47AA1AE} = {8B572587-2D67-4B0E-B83B-E8B8D2B289E1}
 	EndGlobalSection
 EndGlobal

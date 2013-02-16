@@ -1,4 +1,4 @@
-﻿Http Helpers 0.1.4.0 alfa.
+﻿Http Helpers 0.1.5.0 alfa.
 ===
 Easy to use, one method based, asynchronous HTTP request/response parser. It contains also a synchronous version;
 none of versions wraps the other, there are two independent implementations.
@@ -25,10 +25,13 @@ bool result = HttpParser.ParseMessageAsync(stream, (method, uri, version) =>
 // version, code and reason.
 // For the body: just read remaining bytes from the stream.
 ```
+News:
+---
+- Increased tests coverage.
 
 Resources:
 ---
-- [Unit Tests](https://github.com/gsscoder/httphelpers/blob/master/src/HttpHelpers.Tests/Unit/HttpParserFixture.cs)
+- [Unit Tests](https://github.com/gsscoder/httphelpers/blob/master/src/HttpHelpers.Tests/Unit)
 - [Sample web server](https://gist.github.com/gsscoder/4945688) (now included in the solution tree)
 - [Owin HTTP Listener](https://github.com/gsscoder/owinhttplistener) (work in progress)
 

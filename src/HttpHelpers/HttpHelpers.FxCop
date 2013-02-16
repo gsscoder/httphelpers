@@ -40,17 +40,6 @@
   <Settings />
  </Rules>
  <FxCopReport Version="10.0">
-  <Namespaces>
-   <Namespace Name="HttpHelpers">
-    <Messages>
-     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2013-02-13 10:25:02Z">
-      <Issue>
-       <Item>HttpHelpers</Item>
-      </Issue>
-     </Message>
-    </Messages>
-   </Namespace>
-  </Namespaces>
   <Targets>
    <Target Name="$(ProjectDir)/bin/Debug/HttpHelpers.dll">
     <Modules>
@@ -61,60 +50,27 @@
          <Item>'HttpHelpers.dll'</Item>
         </Issue>
        </Message>
-       <Message TypeName="AttributeStringLiteralsShouldParseCorrectly" Category="Microsoft.Usage" CheckId="CA2243" Created="2013-02-13 10:25:02Z">
+       <Message TypeName="AttributeStringLiteralsShouldParseCorrectly" Category="Microsoft.Usage" CheckId="CA2243" Status="Excluded" Created="2013-02-13 10:25:02Z">
         <Issue>
          <Item>'AssemblyInformationalVersionAttribute'</Item>
          <Item>'informationalVersion'</Item>
-         <Item>0.1.0.1-alfa</Item>
+         <Item>0.1.5-alfa</Item>
          <Item>'Version'</Item>
         </Issue>
+        <Notes>
+         <User Name="vmuser">
+          <Note Id="1" />
+         </User>
+        </Notes>
        </Message>
       </Messages>
-      <Namespaces>
-       <Namespace Name="HttpHelpers">
-        <Types>
-         <Type Name="HttpParser">
-          <Members>
-           <Member Name="#ParseMessage(HttpHelpers.IHttpParserCallbacks,System.IO.Stream,System.Func`1&lt;System.Boolean&gt;)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2013-02-13 10:25:02Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'HttpParser.ParseMessage(IHttpParserCallbacks, Stream, Func&lt;bool&gt;)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="IHttpParserCallbacks">
-          <Members>
-           <Member Name="#OnRequestLine(System.String,System.String,System.String)">
-            <Messages>
-             <Message Id="1#" TypeName="UriParametersShouldNotBeStrings" Category="Microsoft.Design" CheckId="CA1054" Status="Excluded" Created="2013-02-13 10:25:02Z">
-              <Issue>
-               <Item>'uri'</Item>
-               <Item>'IHttpParserCallbacks.OnRequestLine(string, string, string)'</Item>
-              </Issue>
-              <Notes>
-               <User Name="vmuser">
-                <Note Id="0" />
-               </User>
-              </Notes>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-      </Namespaces>
      </Module>
     </Modules>
    </Target>
   </Targets>
   <Notes>
    <User Name="vmuser">
-    <Note Id="0" Modified="2013-02-13 10:26:40Z">By design.</Note>
+    <Note Id="1" Modified="2013-02-16 15:10:40Z">Informational version uses http://semver.org notation</Note>
    </User>
   </Notes>
   <Rules>
@@ -123,15 +79,6 @@
    </Rule>
    <Rule TypeName="AttributeStringLiteralsShouldParseCorrectly" Category="Microsoft.Usage" CheckId="CA2243">
     <Resolution Name="Default">In the constructor of {0}, change the value of argument {1}, which is currently "{2}", to something that can be correctly parsed as {3}.</Resolution>
-   </Rule>
-   <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020">
-    <Resolution Name="Default">Consider merging the types defined in '{0}' with another namespace.</Resolution>
-   </Rule>
-   <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
-    <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
-   </Rule>
-   <Rule TypeName="UriParametersShouldNotBeStrings" Category="Microsoft.Design" CheckId="CA1054">
-    <Resolution Name="Default">Change the type of parameter {0} of method {1} from string to System.Uri, or provide an overload of {1}, that allows {0} to be passed as a System.Uri object.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>
