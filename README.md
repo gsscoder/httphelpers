@@ -12,14 +12,14 @@ Stream stream = new MemoryStream(Encoding.UTF8.GetBytes(
   "GET /gsscoder/httphelpers HTTP/1.1\r\n" +
   "Content-Type: text/html; q=0.9, text/plain\r\n\r\n"));
 
-bool result = HttpParser.ParseMessageAsync(stream, (method, uri, version) =>
+bool result = await HttpParser.ParseMessageAsync(stream, (method, uri, version) =>
   {
     Debug.WriteLine(method);
     Debug.WriteLine(uri);
     Debug.WriteLine(version);
   },
   (header, value) => 
-    Debug.WriteLine(header + " " + value).Wait();
+    Debug.WriteLine(header + " " + value);
 
 // When parsing a response, just name heading-line lambda parameters:
 // version, code and reason.
