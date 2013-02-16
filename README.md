@@ -1,4 +1,4 @@
-﻿Http Helpers 0.1.5.0 alfa.
+﻿Http Helpers 0.1.6.0 alfa.
 ===
 Easy to use, one method based, asynchronous HTTP request/response parser. It contains also a synchronous version;
 none of versions wraps the other, there are two independent implementations.
@@ -28,6 +28,7 @@ bool result = await HttpParser.ParseMessageAsync(stream, (method, uri, version) 
 News:
 ---
 - Increased tests coverage.
+- Fixed an issue with ``NO_ASYNC_API`` compilation symbol.
 
 Resources:
 ---

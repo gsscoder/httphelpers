@@ -76,6 +76,26 @@ namespace HttpHelpers
 
             return true;
         }
+
+        private static async Task<bool> ParseHeadingLineAsync(StreamReader reader,
+            Action<string, string, string> onHeadingLine)
+        {
+            var line = await reader.ReadLineAsync();
+
+            return RawParser.ParseHeadingLine(line, onHeadingLine);
+        }
+
+        private static async Task<bool?> ParseHeaderLineAsync(StreamReader reader,
+            Action<string, string> onHeaderLine)
+        {
+            var line = await reader.ReadLineAsync();
+            if (line.Length == 0)
+            {
+                return null;
+            }
+
+            return RawParser.ParseHeaderLine(line, onHeaderLine);
+        }
 #endif
 
         public static bool ParseMessage(Stream stream,
@@ -112,26 +132,6 @@ namespace HttpHelpers
             }
 
             return true;
-        }
-
-        private static async Task<bool> ParseHeadingLineAsync(StreamReader reader,
-            Action<string, string, string> onHeadingLine)
-        {
-            var line = await reader.ReadLineAsync();
-
-            return RawParser.ParseHeadingLine(line, onHeadingLine);
-        }
-
-        private static async Task<bool?> ParseHeaderLineAsync(StreamReader reader,
-            Action<string, string> onHeaderLine)
-        {
-            var line = await reader.ReadLineAsync();
-            if (line.Length == 0)
-            {
-                return null;
-            }
-
-            return RawParser.ParseHeaderLine(line, onHeaderLine);
         }
     }
 }

@@ -4,6 +4,7 @@
   * Increased tests coverage.
   * Minor internal refactoring.
   * Fixed HttpParserFixture.Sync: it was calling always async tests (ooops...).
+  * Fixed issue with #NO_ASYNC_API.
 
 2012-02-15  Giacomo Stelluti Scala  <gsscoder@gmail.com>
 
