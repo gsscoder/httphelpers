@@ -26,17 +26,22 @@
 // THE SOFTWARE.
 //
 #endregion
+#region Preprocessor Directives
+// When using source distribution, uncomment the following line to
+// disable async API
+//#define NO_ASYNC_API
+#endregion
 #region Using Directives
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using HttpHelpers.Extensions;
 #endregion
 
 namespace HttpHelpers
 {
-    public static class HttpParser
+    public static partial class HttpParser
     {
+#if !NO_ASYNC_API
         public static async Task<bool> ParseMessageAsync(Stream stream,
             Action<string, string, string> onHeadingLine,
             Action<string, string> onHeaderLine)
@@ -64,32 +69,44 @@ namespace HttpHelpers
 
             return true;
         }
+#endif
+
+        public static bool ParseMessage(Stream stream,
+            Action<string, string, string> onHeadingLine,
+            Action<string, string> onHeaderLine)
+        {
+            var reader = new StreamReader(stream);
+
+            var headingParsing = RawParser.ParseHeadingLine(reader.ReadLine(), onHeadingLine);
+            if (!headingParsing)
+            {
+                return false;
+            }
+
+            while (true)
+            {
+                var headerLine = reader.ReadLine();
+                headerLine = headerLine ?? string.Empty;
+                if (headerLine.Length == 0)
+                {
+                    break;
+                }
+                var headerParsing = RawParser.ParseHeaderLine(headerLine, onHeaderLine);
+                if (!headerParsing)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
 
         private static async Task<bool> ParseHeadingLineAsync(StreamReader reader,
             Action<string, string, string> onHeadingLine)
         {
             var line = await reader.ReadLineAsync();
-            var stringReader = new StringReader(line);
 
-            var item1 = stringReader.TakeWhile(c => !c.IsWhiteSpace());
-            if (!stringReader.PeekChar().IsWhiteSpace())
-            {
-                return false;
-            }
-            stringReader.SkipWhiteSpace();
-
-            var item2 = stringReader.TakeWhile(c => !c.IsWhiteSpace());
-            if (!stringReader.PeekChar().IsWhiteSpace())
-            {
-                return false;
-            }
-            stringReader.SkipWhiteSpace();
-
-            var item3 = stringReader.ReadToEnd();
-
-            onHeadingLine(item1, item2, item3);
-
-            return true;
+            return RawParser.ParseHeadingLine(line, onHeadingLine);
         }
 
         private static async Task<bool?> ParseHeaderLineAsync(StreamReader reader,
@@ -101,24 +118,7 @@ namespace HttpHelpers
                 return null;
             }
 
-            var stringReader = new StringReader(line);
-
-            stringReader.SkipWhiteSpace();
-
-            var header = stringReader.TakeWhile(c => c != '\x3A');
-            if (stringReader.PeekChar() != '\x3A')
-            {
-                return false;
-            }
-            stringReader.Read();
-
-            stringReader.SkipWhiteSpace();
-
-            var value = stringReader.ReadToEnd();
-
-            onHeaderLine(header, value ?? string.Empty);
-
-            return true;
+            return RawParser.ParseHeaderLine(line, onHeaderLine);
         }
     }
 }
