@@ -28,8 +28,8 @@ HttpParser.ParseMessageAsync(stream, (method, uri, version) =>
 Resources:
 ---
 - [Unit Tests](https://github.com/gsscoder/httphelpers/blob/master/src/HttpHelpers.Tests/Unit/HttpParserFixture.cs)
-- [Sample web server](https://gist.github.com/gsscoder/4945688), now included in the solution tree.
-- [Owin HTTP Listener](https://github.com/gsscoder/owinhttplistener), work in progress.
+- [Sample web server](https://gist.github.com/gsscoder/4945688) (now included in the solution tree)
+- [Owin HTTP Listener](https://github.com/gsscoder/owinhttplistener) (work in progress)
 
 Contacts:
 ---
